@@ -1,6 +1,6 @@
-package ru.akirakozov.sd.refactoring.dao;
+package dao;
 
-import ru.akirakozov.sd.refactoring.model.Product;
+import model.Product;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -40,6 +40,12 @@ public class ProductDao {
             )
                     """;
 
+    private final String databaseName;
+
+    public ProductDao(String databaseName) {
+        this.databaseName = databaseName;
+    }
+
     public List<Product> getHighestPriceProduct() {
         return selectProducts(SELECT_HIGHEST_PRICE_PRODUCT, this::mapProduct);
     }
@@ -72,7 +78,7 @@ public class ProductDao {
         try {
             try (
                     Connection connection = DriverManager
-                            .getConnection("jdbc:sqlite:test.db");
+                            .getConnection("jdbc:sqlite:" + databaseName);
                     Statement st = connection.createStatement()
             ) {
                 st.executeUpdate(query);
@@ -87,7 +93,7 @@ public class ProductDao {
         try {
             try (
                     Connection connection = DriverManager
-                            .getConnection("jdbc:sqlite:test.db");
+                            .getConnection("jdbc:sqlite:" + databaseName);
                     Statement st = connection.createStatement();
                     ResultSet rs = st.executeQuery(query)
             ) {

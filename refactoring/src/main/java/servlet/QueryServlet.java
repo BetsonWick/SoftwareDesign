@@ -1,7 +1,7 @@
-package ru.akirakozov.sd.refactoring.servlet;
+package servlet;
 
-import ru.akirakozov.sd.refactoring.dao.ProductDao;
-import ru.akirakozov.sd.refactoring.model.Product;
+import dao.ProductDao;
+import model.Product;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +13,11 @@ import java.util.List;
  * @author wa5teed
  */
 public class QueryServlet extends HttpServlet {
-    ProductDao productDao = new ProductDao();
+    private final ProductDao productDao;
+
+    public QueryServlet(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -1,4 +1,4 @@
-package ru.akirakozov.sd.refactoring.model;
+package model;
 
 public class Product {
     private final int id;
