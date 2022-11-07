@@ -22,6 +22,9 @@ public class GetProductServletTest extends AbstractServletTest {
                 bodyHandler
         );
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(readTestResourceFile("GetProductServletTestFile.txt"), response.body());
+        assertEquals(
+                readTestResourceFile("GetProductServletTestFile.txt").stripIndent(),
+                response.body().stripIndent()
+        );
     }
 }

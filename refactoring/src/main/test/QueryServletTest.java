@@ -14,14 +14,20 @@ public class QueryServletTest extends AbstractServletTest {
     void testGetMaxPriceProduct() throws IOException, InterruptedException, URISyntaxException {
         HttpResponse<String> response = queryCommand("max");
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(readTestResourceFile("QueryServletTestFile.max.txt"), response.body());
+        assertEquals(
+                readTestResourceFile("QueryServletTestFile.max.txt").stripIndent(),
+                response.body().stripIndent()
+        );
     }
 
     @Test
     void testGetMinPriceProduct() throws IOException, InterruptedException, URISyntaxException {
         HttpResponse<String> response = queryCommand("min");
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(readTestResourceFile("QueryServletTestFile.min.txt"), response.body());
+        assertEquals(
+                readTestResourceFile("QueryServletTestFile.min.txt").stripIndent(),
+                response.body().stripIndent()
+        );
     }
 
     @Test
