@@ -8,47 +8,36 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static server.ProductsServer.BASE_URI;
+import static server.ProductsServer.QUERY_COMMAND;
 
 public class QueryServletTest extends AbstractServletTest {
     @Test
     void testGetMaxPriceProduct() throws IOException, InterruptedException, URISyntaxException {
         HttpResponse<String> response = queryCommand("max");
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(
-                readTestResourceFile("QueryServletTestFile.max.txt").stripIndent(),
-                response.body().stripIndent()
-        );
+        assertTestResourceFile("QueryServletTestFile.max.txt", response.body());
     }
 
     @Test
     void testGetMinPriceProduct() throws IOException, InterruptedException, URISyntaxException {
         HttpResponse<String> response = queryCommand("min");
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(
-                readTestResourceFile("QueryServletTestFile.min.txt").stripIndent(),
-                response.body().stripIndent()
-        );
+        assertTestResourceFile("QueryServletTestFile.min.txt", response.body());
     }
 
     @Test
     void testGetProductSum() throws IOException, InterruptedException, URISyntaxException {
         HttpResponse<String> response = queryCommand("sum");
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(
-                readTestResourceFile("QueryServletTestFile.sum.txt").stripIndent(),
-                response.body().stripIndent()
-        );
+        assertTestResourceFile("QueryServletTestFile.sum.txt", response.body());
     }
 
     @Test
     void testGetProductCount() throws IOException, InterruptedException, URISyntaxException {
         HttpResponse<String> response = queryCommand("count");
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(
-                readTestResourceFile(
-                        "QueryServletTestFile.count.txt").stripIndent(),
-                response.body().stripIndent()
-        );
+        assertTestResourceFile("QueryServletTestFile.count.txt", response.body());
 
     }
 

@@ -8,6 +8,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static server.ProductsServer.BASE_URI;
+import static server.ProductsServer.GET_PRODUCTS;
 
 public class GetProductServletTest extends AbstractServletTest {
     @Test
@@ -22,9 +24,6 @@ public class GetProductServletTest extends AbstractServletTest {
                 bodyHandler
         );
         assertEquals(Response.SC_OK, response.statusCode());
-        assertEquals(
-                readTestResourceFile("GetProductServletTestFile.txt").stripIndent(),
-                response.body().stripIndent()
-        );
+        assertTestResourceFile("GetProductServletTestFile.txt", response.body());
     }
 }

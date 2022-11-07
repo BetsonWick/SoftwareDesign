@@ -7,6 +7,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static server.ProductsServer.ADD_PRODUCT;
+import static server.ProductsServer.BASE_URI;
 
 public class AddProductServletTest extends AbstractServletTest {
     @Test
