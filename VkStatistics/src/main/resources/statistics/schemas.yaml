@@ -1,0 +1,16 @@
+StatisticsResponse:
+  allOf:
+    - $ref: '../common/schemas.yaml#/CommonApiResponse'
+    - properties:
+        result:
+          type: array
+          items:
+            $ref: '#/StatisticsByDayDto'
+
+StatisticsByDayDto:
+  type: object
+  properties:
+    date:
+      type: string
+    count:
+      type: integer

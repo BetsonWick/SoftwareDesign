@@ -1,0 +1,19 @@
+OwnerId:
+  in: path
+  name: ownerId
+  required: true
+  schema:
+    type: integer
+    format: int64
+    description:
+      OwnerId
+
+NDays:
+  in: path
+  name: nDays
+  required: true
+  schema:
+    type: integer
+    format: int64
+    description:
+      NDays

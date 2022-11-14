@@ -1,0 +1,28 @@
+openapi: 3.0.0
+info:
+  description: VK Statistics
+  version: 1.0.0
+  title: VK Statistics
+
+paths:
+  /statistics/{ownerId}/{nDays}:
+    get: # Type of request: POST
+      tags:
+        - statistics
+      summary: Returns statistics by hashtag
+      description: ''
+      parameters:
+        - $ref: 'common/params.yaml#/OwnerId'
+        - $ref: 'common/params.yaml#/NDays'
+      operationId: getStatistics # That will be the method to add the logic
+      responses: # ApiResponse documentation
+        '200':
+          description: Statistics by hashtag
+          content:
+            application/json:
+              schema:
+                $ref: 'statistics/schemas.yaml#/StatisticsResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
