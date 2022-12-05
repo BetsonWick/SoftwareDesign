@@ -14,6 +14,8 @@ paths:
       parameters:
         - $ref: 'common/params.yaml#/OwnerId'
         - $ref: 'common/params.yaml#/NDays'
+        - $ref: 'common/params.yaml#/DateTo'
+
       operationId: getStatistics # That will be the method to add the logic
       responses: # ApiResponse documentation
         '200':

@@ -17,3 +17,11 @@ NDays:
     format: int64
     description:
       NDays
+
+DateTo:
+  in: query
+  name: dateTo
+  required: true
+  schema:
+    type: string
+    format: date

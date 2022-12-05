@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.ResponseEntity
 import org.springframework.test.context.ActiveProfiles
-import ru.wa5teed.vkstatistics.model.VkMessage
 import ru.wa5teed.vkstatistics.service.StatisticsService
 import ru.wa5teed.vkstatistics.service.VkApiService
+import java.nio.file.Files
 import java.time.LocalDate
+import java.util.*
+import kotlin.io.path.toPath
 
 
 @SpringBootTest(
@@ -30,18 +32,17 @@ class VkStatisticsApplicationTests {
 
     @BeforeEach
     fun init() {
-        Mockito.`when`(vkApiService.getRecentPosts(OWNER_ID, 100)).thenReturn(ALL_MESSAGES)
-        Mockito.`when`(vkApiService.getRecentPosts(OWNER_ID, 1)).thenReturn(ALL_MESSAGES.subList(0, 2))
+        Mockito.`when`(vkApiService.getRecentPostsResponseString(OWNER_ID))
+            .thenReturn(
+                Files.readString(
+                    Objects.requireNonNull(javaClass.getResource("/all.txt"))
+                        .toURI().toPath()
+                )
+            )
     }
 
     companion object {
-        val OWNER_ID = 1L
-        val ALL_MESSAGES = listOf(
-            VkMessage(1, LocalDate.of(2022, 10, 1)),
-            VkMessage(2, LocalDate.of(2022, 10, 1)),
-            VkMessage(3, LocalDate.of(2022, 9, 20)),
-            VkMessage(4, LocalDate.of(2022, 9, 1))
-        )
+        const val OWNER_ID = 1L
     }
 
     @Test
@@ -52,33 +53,33 @@ class VkStatisticsApplicationTests {
                 StatisticsResponse().result(
                     listOf(
                         StatisticsByDayDto()
-                            .date("2022-10-01")
-                            .count(2)
+                            .date("2018-05-08")
+                            .count(1),
                     )
                 )
-            ), statisticsService.getStatistics(OWNER_ID, 1)
+            ), statisticsService.getStatistics(OWNER_ID, 1, LocalDate.of(2018, 5, 8))
         )
     }
 
     @Test
-    @DisplayName("Get all messages posted")
-    fun getAllMessages() {
+    @DisplayName("Get multiple messages posted")
+    fun getMultipleMessages() {
         assertEquals(
             ResponseEntity.ok(
                 StatisticsResponse().result(
                     listOf(
                         StatisticsByDayDto()
-                            .date("2022-09-01")
-                            .count(1),
+                            .date("2018-04-30")
+                            .count(3),
                         StatisticsByDayDto()
-                            .date("2022-09-20")
-                            .count(1),
+                            .date("2018-05-01")
+                            .count(2),
                         StatisticsByDayDto()
-                            .date("2022-10-01")
-                            .count(2)
+                            .date("2018-05-03")
+                            .count(1)
                     )
                 )
-            ), statisticsService.getStatistics(OWNER_ID, 100)
+            ), statisticsService.getStatistics(OWNER_ID, 8, LocalDate.of(2018, 5, 7))
         )
     }
 }

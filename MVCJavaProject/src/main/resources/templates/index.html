@@ -1,0 +1,42 @@
+<html lang="ru">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <title>Greeting</title>
+</head>
+<body>
+<h2>Hello, World!</h2>
+
+<table>
+    <th:block th:each="taskList: ${taskLists}">
+        <tr>
+            <td th:text="${taskList.getName()}"/>
+            <td>
+                <form action="/get-task-list" method="GET">
+                    <button type="submit" name="taskListId" th:value="${taskList.getId()}">
+                        Go to tasks
+                    </button>
+                </form>
+                <form action="/delete-task-list" method="POST">
+                    <button type="submit" name="taskListId" th:value="${taskList.getId()}">
+                        Remove task list
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </th:block>
+</table>
+
+<h3>Add new task list</h3>
+<form th:object="${taskList}" method="POST" action="/add-task-list">
+    <table>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+    </table>
+
+    <input type="Submit" value="add">
+</form>
+
+</body>
+</html>
