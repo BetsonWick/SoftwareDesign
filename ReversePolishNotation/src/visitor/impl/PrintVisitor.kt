@@ -5,16 +5,16 @@ import token.impl.Brace
 import token.impl.NumberToken
 import token.impl.Operation
 import visitor.TokenVisitor
-import java.io.OutputStream
 
 class PrintVisitor : TokenVisitor {
     private val result = StringBuilder()
 
-    fun print(tokenList: List<Token>){
+    fun print(tokenList: List<Token>): String {
         for (token in tokenList) {
             token.accept(this)
         }
         println(result)
+        return result.toString()
     }
 
     override fun visit(token: NumberToken) {
