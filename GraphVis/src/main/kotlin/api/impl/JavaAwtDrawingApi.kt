@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.awt.geom.Ellipse2D
 import java.awt.geom.Line2D
+import java.lang.IllegalArgumentException
 import kotlin.system.exitProcess
 
 class JavaAwtDrawingApi(private val width: Long, private val height: Long) : DrawingApi {
@@ -50,11 +51,13 @@ class JavaAwtDrawingApi(private val width: Long, private val height: Long) : Dra
         val circles = mutableListOf<Ellipse2D>()
         val lines = mutableListOf<Line2D>()
 
-        override fun paint(g: Graphics?) {
-            val g2D = g as Graphics2D
-
-            circles.forEach(g2D::fill)
-            lines.forEach(g2D::draw)
+        override fun paint(graphics: Graphics) {
+            if (graphics is Graphics2D) {
+                circles.forEach(graphics::fill)
+                lines.forEach(graphics::draw)
+            } else {
+                throw IllegalArgumentException("Unsupported graphics type!")
+            }
         }
     }
 }
