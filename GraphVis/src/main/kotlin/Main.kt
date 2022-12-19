@@ -1,3 +1,4 @@
+import api.impl.CircularGraphDrawingStrategy
 import api.impl.JavaAwtDrawingApi
 import api.impl.JavaFXDrawingApi
 import model.components.Edge
@@ -10,6 +11,7 @@ fun main(args: Array<String>) {
     }
     val width = if (args.size >= 3) args[2].toLong() else 1280
     val height = if (args.size >= 4) args[3].toLong() else 720
+    val graphDrawingStrategy = CircularGraphDrawingStrategy()
     val drawingApi = when (args[0]) {
         "fx" -> JavaFXDrawingApi(width, height)
         "awt" -> JavaAwtDrawingApi(width, height)
@@ -24,7 +26,7 @@ fun main(args: Array<String>) {
                 val edgeLine = readLine()!!.split(" ")
                 edgesList.add(Edge(edgeLine[0].toInt(), edgeLine[1].toInt()))
             }
-            EdgeGraph(drawingApi, edgesList).drawGraph()
+            EdgeGraph(drawingApi, graphDrawingStrategy, edgesList).drawGraph()
         }
         "matrix" -> {
             println("Write matrix size")
@@ -33,7 +35,7 @@ fun main(args: Array<String>) {
             repeat(size) {
                 matrix.add(readLine()!!.split(" ").map { it == "1" }.toTypedArray())
             }
-            MatrixGraph(drawingApi, matrix.toTypedArray()).drawGraph()
+            MatrixGraph(drawingApi, graphDrawingStrategy, matrix.toTypedArray()).drawGraph()
         }
         else -> throw IllegalArgumentException("Unsupported graph type!")
     }
