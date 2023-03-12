@@ -1,0 +1,33 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'java'
+    id("com.google.protobuf") version "0.9.2"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    implementation("com.google.protobuf:protobuf-java:4.0.0-rc-2")
+    implementation("com.typesafe.akka:akka-actor_2.11:2.4.17")
+    implementation("org.json:json:20230227")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.10.1'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
