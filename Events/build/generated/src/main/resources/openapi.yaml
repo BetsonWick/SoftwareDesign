@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  description: Event sourcing
+  title: Event sourcing
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /statistics/{subscriptionId}/day-visits:
+    get:
+      operationId: getDayVisitsStatistics
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          description: Subscription Id
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DayVisitsStatisticsResponse'
+          description: Day visits statistics
+        "400":
+          description: Client error
+        "500":
+          description: Server error
+      summary: Returns day visits statistics by subscription id
+      tags:
+      - statistics
+      x-accepts: application/json
+      x-tags:
+      - tag: statistics
+  /statistics/{subscriptionId}/summary:
+    get:
+      operationId: getSummaryStatistics
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          description: Subscription Id
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryStatisticResponse'
+          description: Summary statistics
+        "400":
+          description: Client error
+        "500":
+          description: Server error
+      summary: Returns summary statistics by subscription id
+      tags:
+      - statistics
+      x-accepts: application/json
+      x-tags:
+      - tag: statistics
+  /subscriptions/{subscriptionId}:
+    get:
+      operationId: getSubscriptionInfo
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          description: Subscription Id
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+          description: Subscription info by id
+        "400":
+          description: Client error
+        "500":
+          description: Server error
+      summary: Get subscription info by id
+      tags:
+      - subscriptions
+      x-accepts: application/json
+      x-tags:
+      - tag: subscriptions
+  /subscriptions/{subscriptionId}/update:
+    post:
+      operationId: updateSubscription
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          description: Subscription Id
+          type: integer
+      - in: query
+        name: duration
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+          description: OK
+        "400":
+          description: Client error
+        "500":
+          description: Server error
+      summary: Update subscription by id
+      tags:
+      - subscriptions
+      x-accepts: application/json
+      x-tags:
+      - tag: subscriptions
+  /subscriptions/{subscriptionId}/add:
+    post:
+      operationId: addSubscription
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          description: Subscription Id
+          type: integer
+      - in: query
+        name: dateFrom
+        required: true
+        schema:
+          format: date
+          type: string
+      - in: query
+        name: dateTo
+        required: true
+        schema:
+          format: date
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+          description: OK
+        "400":
+          description: Client error
+        "500":
+          description: Server error
+      summary: Add subscription by id
+      tags:
+      - subscriptions
+      x-accepts: application/json
+      x-tags:
+      - tag: subscriptions
+  /turnstile/{subscriptionId}/enter:
+    post:
+      operationId: enter
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          description: Subscription Id
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PassResponse'
+          description: OK
+        "400":
+          description: Client error
+        "500":
+          description: Server error
+      summary: Add enter event by subscriptionId
+      tags:
+      - turnstile
+      x-accepts: application/json
+      x-tags:
+      - tag: turnstile
+  /turnstile/{subscriptionId}/leave:
+    post:
+      operationId: leave
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          description: Subscription Id
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PassResponse'
+          description: OK
+        "400":
+          description: Client error
+        "500":
+          description: Server error
+      summary: Add leave event by subscriptionId
+      tags:
+      - turnstile
+      x-accepts: application/json
+      x-tags:
+      - tag: turnstile
+components:
+  parameters:
+    SubscriptionId:
+      in: path
+      name: subscriptionId
+      required: true
+      schema:
+        description: Subscription Id
+        type: integer
+    Duration:
+      in: query
+      name: duration
+      required: true
+      schema:
+        format: int64
+        type: integer
+    DateFrom:
+      in: query
+      name: dateFrom
+      required: true
+      schema:
+        format: date
+        type: string
+    DateTo:
+      in: query
+      name: dateTo
+      required: true
+      schema:
+        format: date
+        type: string
+  schemas:
+    DayVisitsStatisticsResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonApiResponse'
+      - $ref: '#/components/schemas/DayVisitsStatisticsResponse_allOf'
+    DayVisitsStatisticDto:
+      properties:
+        date:
+          format: date
+          type: string
+        visitsCount:
+          type: integer
+      type: object
+    SummaryStatisticResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonApiResponse'
+      - $ref: '#/components/schemas/SummaryStatisticResponse_allOf'
+    SummaryStatisticDto:
+      properties:
+        frequency:
+          type: double
+        avgDuration:
+          type: double
+      type: object
+    SubscriptionResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonApiResponse'
+      - $ref: '#/components/schemas/SubscriptionResponse_allOf'
+    SubscriptionDto:
+      properties:
+        dateFrom:
+          format: date
+          type: string
+        dateTo:
+          format: date
+          type: string
+      type: object
+    PassResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonApiResponse'
+      - $ref: '#/components/schemas/PassResponse_allOf'
+    PassDto:
+      properties:
+        result:
+          type: boolean
+        dateTime:
+          format: date-time
+          type: string
+      type: object
+    CommonApiResponse:
+      description: Стандартная обертка для ответов сервера
+      discriminator:
+        propertyName: className
+      properties:
+        className:
+          type: string
+        host:
+          description: "Хост, на котором исполнялся запрос"
+          type: string
+        version:
+          description: Версия АПИ
+          type: string
+        executingTime:
+          description: Время исполнения запроса в мс
+          type: string
+        actions:
+          description: "Ручка, которая обрабатывала запрос"
+          type: string
+      type: object
+    DayVisitsStatisticsResponse_allOf:
+      properties:
+        result:
+          items:
+            $ref: '#/components/schemas/DayVisitsStatisticDto'
+          type: array
+      example: null
+    SummaryStatisticResponse_allOf:
+      properties:
+        result:
+          items:
+            $ref: '#/components/schemas/SummaryStatisticDto'
+          type: array
+      example: null
+    SubscriptionResponse_allOf:
+      properties:
+        result:
+          $ref: '#/components/schemas/SubscriptionDto'
+      example: null
+    PassResponse_allOf:
+      properties:
+        result:
+          $ref: '#/components/schemas/PassDto'
+      example: null

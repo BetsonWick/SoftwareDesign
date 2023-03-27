@@ -1,0 +1,32 @@
+SubscriptionResponse:
+  allOf:
+    - $ref: '../common/schemas.yaml#/CommonApiResponse'
+    - properties:
+        result:
+          $ref: '#/SubscriptionDto'
+
+SubscriptionDto:
+  type: object
+  properties:
+    dateFrom:
+      format: date
+      type: string
+    dateTo:
+      format: date
+      type: string
+
+PassResponse:
+  allOf:
+    - $ref: '../common/schemas.yaml#/CommonApiResponse'
+    - properties:
+        result:
+          $ref: '#/PassDto'
+
+PassDto:
+  type: object
+  properties:
+    result:
+      type: boolean
+    dateTime:
+      format: date-time
+      type: string

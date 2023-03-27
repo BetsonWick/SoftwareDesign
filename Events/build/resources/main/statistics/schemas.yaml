@@ -1,0 +1,32 @@
+DayVisitsStatisticsResponse:
+  allOf:
+    - $ref: '../common/schemas.yaml#/CommonApiResponse'
+    - properties:
+        result:
+          type: array
+          items:
+            $ref: '#/DayVisitsStatisticDto'
+
+DayVisitsStatisticDto:
+  type: object
+  properties:
+    date:
+      format: date
+      type: string
+    visitsCount:
+      type: integer
+
+SummaryStatisticResponse:
+  allOf:
+    - $ref: '../common/schemas.yaml#/CommonApiResponse'
+    - properties:
+        result:
+          $ref: '#/SummaryStatisticDto'
+
+SummaryStatisticDto:
+  type: object
+  properties:
+    frequency:
+      type: double
+    avgDuration:
+      type: double

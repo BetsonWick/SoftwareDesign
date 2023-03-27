@@ -3,5 +3,5 @@ import model.SearchSystem
 import model.SerpApi
 
 fun main() {
-    SearchSystem(SerpApi()).search("Query", setOf(SearchEngine.BING))
+    println(SearchSystem(SerpApi()).search("Query", setOf(SearchEngine.BING, SearchEngine.GOOGLE)))
 }

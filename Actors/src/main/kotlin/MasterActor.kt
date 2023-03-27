@@ -22,7 +22,7 @@ class MasterActor(val engines: Set<SearchEngine>, val api: SerpApi) : UntypedAct
             }
             is Messages.Response -> {
                 results.add(message)
-                println(message.engine + " " + message.linkList)
+                //println(message.engine + " " + message.linkList)
                 if (results.size >= engines.size) {
                     sendAndStop()
                 }

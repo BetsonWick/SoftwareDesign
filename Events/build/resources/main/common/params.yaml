@@ -1,0 +1,30 @@
+SubscriptionId:
+  in: path
+  name: subscriptionId
+  required: true
+  schema:
+    type: integer
+    description:
+      Subscription Id
+DateFrom:
+  in: query
+  name: dateFrom
+  required: true
+  schema:
+    type: string
+    format: date
+DateTo:
+  in: query
+  name: dateTo
+  required: true
+  schema:
+    type: string
+    format: date
+
+Duration:
+  in: query
+  name: duration
+  required: true
+  schema:
+    type: integer
+    format: int64

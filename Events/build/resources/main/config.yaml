@@ -1,0 +1,142 @@
+openapi: 3.0.0
+info:
+  description: Event sourcing
+  version: 1.0.0
+  title: Event sourcing
+paths:
+  /statistics/{subscriptionId}/day-visits:
+    get:
+      tags:
+        - statistics
+      summary: Returns day visits statistics by subscription id
+      operationId: getDayVisitsStatistics
+      parameters:
+        - $ref: 'common/params.yaml#/SubscriptionId'
+      responses:
+        '200':
+          description: Day visits statistics
+          content:
+            application/json:
+              schema:
+                $ref: 'statistics/schemas.yaml#/DayVisitsStatisticsResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
+  /statistics/{subscriptionId}/summary:
+    get:
+      tags:
+        - statistics
+      summary: Returns summary statistics by subscription id
+      operationId: getSummaryStatistics
+      parameters:
+        - $ref: 'common/params.yaml#/SubscriptionId'
+      responses:
+        '200':
+          description: Summary statistics
+          content:
+            application/json:
+              schema:
+                $ref: 'statistics/schemas.yaml#/SummaryStatisticResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
+  /subscriptions/{subscriptionId}:
+    get:
+      tags:
+        - subscriptions
+      summary: Get subscription info by id
+      operationId: getSubscriptionInfo
+      parameters:
+        - $ref: 'common/params.yaml#/SubscriptionId'
+      responses:
+        '200':
+          description: Subscription info by id
+          content:
+            application/json:
+              schema:
+                $ref: 'subscription/schemas.yaml#/SubscriptionResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
+  /subscriptions/{subscriptionId}/update:
+    post:
+      tags:
+        - subscriptions
+      summary: Update subscription by id
+      operationId: updateSubscription
+      parameters:
+        - $ref: 'common/params.yaml#/SubscriptionId'
+        - $ref: 'common/params.yaml#/Duration'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'subscription/schemas.yaml#/SubscriptionResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
+  /subscriptions/{subscriptionId}/add:
+    post:
+      tags:
+        - subscriptions
+      summary: Add subscription by id
+      operationId: addSubscription
+      parameters:
+        - $ref: 'common/params.yaml#/SubscriptionId'
+        - $ref: 'common/params.yaml#/DateFrom'
+        - $ref: 'common/params.yaml#/DateTo'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'subscription/schemas.yaml#/SubscriptionResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
+  /turnstile/{subscriptionId}/enter:
+    post:
+      tags:
+        - turnstile
+      summary: Add enter event by subscriptionId
+      operationId: enter
+      parameters:
+        - $ref: 'common/params.yaml#/SubscriptionId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'subscription/schemas.yaml#/PassResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
+  /turnstile/{subscriptionId}/leave:
+    post:
+      tags:
+        - turnstile
+      summary: Add leave event by subscriptionId
+      operationId: leave
+      parameters:
+        - $ref: 'common/params.yaml#/SubscriptionId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'subscription/schemas.yaml#/PassResponse'
+        '400':
+          description: Client error
+        '500':
+          description: Server error
