@@ -1,7 +1,9 @@
 package ru.wa5teed.reactivity.model
 
-enum class Currency(val value: Long) {
-    RUB(1),
-    USD(70),
-    EUR(80),
+import java.math.BigDecimal
+
+enum class Currency(val value: BigDecimal) {
+    RUB(BigDecimal(1)),
+    USD(BigDecimal(0.014)),
+    EUR(BigDecimal(0.0125)),
 }

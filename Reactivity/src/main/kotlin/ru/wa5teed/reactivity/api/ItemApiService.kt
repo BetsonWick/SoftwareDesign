@@ -7,6 +7,7 @@ import reactor.core.publisher.Mono
 import ru.wa5teed.reactivity.model.Item
 import ru.wa5teed.reactivity.repository.ItemRepository
 import ru.wa5teed.reactivity.repository.UserRepository
+import java.math.BigDecimal
 
 @RestController
 @RequestMapping("items")
@@ -15,10 +16,10 @@ class ItemApiService(private val itemRepository: ItemRepository, private val use
     fun getItemsView(@PathVariable("user_id") userId: Long): Flux<Item> {
         val viewUser = userRepository.findById(userId)
         val viewItems = itemRepository.findAll()
-        return viewItems.flatMap { item -> viewUser.map { item.mulPrice(it.itemCurrency.value) } }
+        return viewItems.flatMap { item -> viewUser.map { item.adjustPrice(it.itemCurrency.value) } }
     }
 
     @PostMapping
     fun addItem(@RequestBody itemDto: Messages.ItemDto): Mono<Item> =
-        itemRepository.save(Item(itemDto.id, itemDto.priceKopecks, itemDto.itemSku))
+        itemRepository.save(Item(itemDto.id, BigDecimal(itemDto.priceKopecks), itemDto.itemSku))
 }
