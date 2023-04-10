@@ -1,0 +1,16 @@
+message ItemDto {
+  required int64 id = 1;
+  required int64 price_kopecks = 2;
+  required string item_sku = 3;
+}
+
+message UserDto {
+  required int64 id = 1;
+  required Currency item_currency = 2;
+  enum Currency {
+    UNKNOWN = 0;
+    RUB = 1;
+    USD = 2;
+    EUR = 3;
+  }
+}
